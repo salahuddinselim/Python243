@@ -1,0 +1,5 @@
+columnA,columnB,columnC
+10.0,A,True
+,B,False
+50.0,B,True
+100.0,A,True

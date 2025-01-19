@@ -5,7 +5,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from sklearn.preprocessing import StandardScaler
 
-# Data preparation
+
 data = {
     'Hours_Studied': [2.0, 3.5, 5.0, 1.0, 4.0, 6.0, 1.5, 3.0, 2.5, 4.5],
     'Hours_Slept': [7.0, 6.0, 8.0, 5.0, 6.5, 8.5, 6.0, 7.0, 5.0, 7.5],
@@ -14,41 +14,41 @@ data = {
 }
 df = pd.DataFrame(data)
 
-# Save the dataset to a CSV file
+
 df.to_csv('student_data.csv', index=False)
 
-# Display the first few rows of the dataset
+
 print("First few rows of the dataset:")
 print(df.head())
 
-# Check for missing values
+
 print("\nMissing values:")
 print(df.isnull().sum())
 
-# Convert 'Result' to numerical values
+
 df['Result'] = df['Result'].map({'fail': 0, 'pass': 1})
 
-# Feature scaling
+
 scaler = StandardScaler()
 features = ['Hours_Studied', 'Hours_Slept', 'Prior_Grade']
 df[features] = scaler.fit_transform(df[features])
 
-# Split the data into features and target
+
 X = df[features]
 y = df['Result']
 
-# Split the data into training and testing sets
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
-# Train the KNN model with k=3
+
 k = 3
 knn = KNeighborsClassifier(n_neighbors=k)
 knn.fit(X_train, y_train)
 
-# Make predictions on the test set
+
 y_pred = knn.predict(X_test)
 
-# Evaluate the model
+
 accuracy = accuracy_score(y_test, y_pred)
 conf_matrix = confusion_matrix(y_test, y_pred)
 class_report = classification_report(y_test, y_pred, target_names=['fail', 'pass'])
@@ -59,7 +59,7 @@ print(conf_matrix)
 print("\nClassification Report:")
 print(class_report)
 
-# Evaluate the model with different k values
+
 k_values = [1, 3, 5]
 for k in k_values:
     knn = KNeighborsClassifier(n_neighbors=k)
@@ -68,12 +68,12 @@ for k in k_values:
     accuracy = accuracy_score(y_test, y_pred)
     print(f"\nk={k}, Accuracy: {accuracy:.2f}")
 
-# Determine the best k value
+
 best_k = 3
 print(f"\nBest k: {best_k}")
 print(f"Overall Accuracy: {accuracy:.2f}")
 
-# Make a prediction for a new student
+
 new_student = np.array([[3, 6.5, 77]])
 new_student_scaled = scaler.transform(new_student)
 prediction = knn.predict(new_student_scaled)
